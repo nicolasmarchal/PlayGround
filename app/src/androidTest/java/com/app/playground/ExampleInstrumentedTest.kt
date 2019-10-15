@@ -1,5 +1,6 @@
 package com.app.playground
 
+import android.content.Context
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
 
@@ -7,6 +8,10 @@ import org.junit.Test
 import org.junit.runner.RunWith
 
 import org.junit.Assert.*
+import android.content.SharedPreferences
+import androidx.test.InstrumentationRegistry.getTargetContext
+import org.junit.Before
+
 
 /**
  * Instrumented test, which will execute on an Android device.
@@ -15,10 +20,25 @@ import org.junit.Assert.*
  */
 @RunWith(AndroidJUnit4::class)
 class ExampleInstrumentedTest {
+
+    private val sharedPreferences: SharedPreferences? = null
+    var context: Context? = null
+
+
+    @Before
+    fun init() {
+        context = InstrumentationRegistry.getInstrumentation().targetContext
+    }
+
+
     @Test
     fun useAppContext() {
-        // Context of the app under test.
-        val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("com.app.playground", appContext.packageName)
+        assertEquals("com.app.playground", context?.packageName)
+    }
+
+    @Test
+    fun getSharedCount() {
+        SharedPrefs.saveCount(context!!, 42)
+        assertEquals(SharedPrefs.getCount(context!!), 42)
     }
 }

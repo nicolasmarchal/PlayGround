@@ -10,7 +10,14 @@ import org.junit.runner.RunWith
 import org.junit.Assert.*
 import android.content.SharedPreferences
 import androidx.test.InstrumentationRegistry.getTargetContext
+import androidx.test.core.app.ActivityScenario
+import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.ext.junit.rules.ActivityScenarioRule
+import androidx.test.rule.ActivityTestRule
 import org.junit.Before
+import org.junit.Rule
 
 
 /**
@@ -22,11 +29,15 @@ import org.junit.Before
 class ExampleInstrumentedTest {
     var context: Context? = null
 
+    @Rule
+    @JvmField
+    val rule = ActivityTestRule<MainActivity>(MainActivity::class.java)
+
     @Before
     fun init() {
         context = InstrumentationRegistry.getInstrumentation().targetContext
+        SharedPrefs.saveCount(context!!, 42)
     }
-
 
     @Test
     fun useAppContext() {
@@ -35,7 +46,12 @@ class ExampleInstrumentedTest {
 
     @Test
     fun getSharedCount() {
-        SharedPrefs.saveCount(context!!, 42)
-        assertEquals(SharedPrefs.getCount(context!!), 42)
+        assertEquals(42, SharedPrefs.getCount(context!!))
+    }
+
+    @Test
+    fun userCanClickButton() {
+        onView(withId(R.id.button)).perform(click())
+        assertEquals(43, SharedPrefs.getCount(context!!))
     }
 }

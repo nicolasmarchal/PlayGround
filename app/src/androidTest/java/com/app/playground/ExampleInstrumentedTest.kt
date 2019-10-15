@@ -20,10 +20,7 @@ import org.junit.Before
  */
 @RunWith(AndroidJUnit4::class)
 class ExampleInstrumentedTest {
-
-    private val sharedPreferences: SharedPreferences? = null
     var context: Context? = null
-
 
     @Before
     fun init() {

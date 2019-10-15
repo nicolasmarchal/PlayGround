@@ -1,7 +1,6 @@
 language: android
 dist: trusty
 
-
 env:
   global:
     - ANDROID_API=27
@@ -24,7 +23,7 @@ android:
     - platform-tools
     - build-tools-$ANDROID_BUILD_TOOLS
     - android-$ANDROID_API
-    - android-$EMULATOR_API_LEVEL
+    - android-$EMULATOR_API
     - sys-img-armeabi-v7a-addon-google_apis-google-$EMULATOR_API
     - sys-img-armeabi-v7a-addon-google_apis-google-$ANDROID_API
     - extra-google-google_play_services
@@ -37,6 +36,7 @@ android:
 
 # Emulator Management: Create, Start and Wait
 before_script:
+  - chmod +x gradlew
   - echo no | android create avd --force -n test -t android-22 --abi armeabi-v7a -c 100M
   - emulator -avd test -no-audio -no-window &
   - android-wait-for-emulator

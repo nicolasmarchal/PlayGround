@@ -42,7 +42,7 @@ class ExampleInstrumentedTest {
 
     @Test
     fun getSharedCount() {
-        assertEquals(42, SharedPrefs.getCount(context!!))
+        assertEquals(43, SharedPrefs.getCount(context!!))
     }
 
     @Test
